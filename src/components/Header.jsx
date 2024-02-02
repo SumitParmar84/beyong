@@ -1,22 +1,27 @@
-import { Box, Card, Flex, HoverCard, Text, Title, rem } from '@mantine/core'
-import React, { useEffect, useState } from 'react'
+import { Box, Button, Card, Flex, HoverCard, Modal, PasswordInput, SimpleGrid, Stack, Text, TextInput, Title, rem } from '@mantine/core'
+import { useEffect, useState } from 'react'
 import { FaLocationDot } from 'react-icons/fa6';
 import { AiOutlineSearch, AiFillHeart } from 'react-icons/ai';
 import { IoCartSharp } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './../auth/store';
 import { Spotlight, spotlight } from '@mantine/spotlight';
+import { useDisclosure } from '@mantine/hooks';
 
 
 
 const Header = () => {
-    const { storetokenInLS } = useAuth();
-    const [dropdown,setDropDown] = useState([]);
+    const { storetokenInLS , isLoggedIn } = useAuth();
+    const [dropdown, setDropDown] = useState([]);
+    const [opened, { open, close }] = useDisclosure(false);
     const navigate = useNavigate();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    useEffect(()=> {
+    useEffect(() => {
         const getDropDownItem = async () => {
-            const res = await fetch("https://academics.newtonschool.co/api/v1/ecommerce/clothes/categories",{
+            const res = await fetch("https://academics.newtonschool.co/api/v1/ecommerce/clothes/categories", {
                 headers: {
                     "projectID": "f104bi07c490",
                 }
@@ -26,26 +31,26 @@ const Header = () => {
         }
 
         getDropDownItem();
-    },[]);
+    }, []);
 
     const actions = [
         {
             id: 'jeans',
             label: 'Jeans',
             description: '',
-            onClick: () => {navigate("/products/jeans")},
+            onClick: () => { navigate("/products/jeans") },
         },
         {
             id: 'jogger',
             label: 'Jogger',
             description: '',
-            onClick: () => {navigate("/products/jogger")}
+            onClick: () => { navigate("/products/jogger") }
         },
         {
             id: 'jumpsuit',
             label: 'Jumpsuit',
             description: '',
-            onClick: () => {navigate("/products/jumpsuit")}
+            onClick: () => { navigate("/products/jumpsuit") }
         },
     ];
     const signupUser = async () => {
@@ -67,6 +72,7 @@ const Header = () => {
         setName("");
         setEmail("");
         setPassword("");
+        navigate("/")
         location.reload();
     }
 
@@ -82,15 +88,31 @@ const Header = () => {
                     <Text>TRACK ORDER</Text>
                 </Flex>
                 <Flex gap='md'>
-                    <Text style={{ cursor: 'pointer' }}>LOGIN </Text>
-                    <Text>|</Text>
-                    <Text style={{ cursor: 'pointer' }}>SIGNUP</Text>
+                    {!isLoggedIn  ? 
+                    ( 
+                    <>
+                        <Text style={{ cursor: 'pointer' }} onClick={() => navigate("/login")}>LOGIN </Text>
+                        <Text>|</Text>
+                        <Text style={{ cursor: 'pointer' }} onClick={open}>SIGNUP</Text>
+                    </>
+                    )
+                : (
+                    <Text style={{ cursor: 'pointer' }} onClick={()=>navigate("/logout")}>LOGOUT</Text>
+                )}
+                    <Modal centered opened={opened} onClose={close} title="Authentication">
+                        <Stack gap='lg'>
+                        <TextInput label='Your Name' value={name} onChange={e => setName(e.target.value)} required />
+                        <TextInput label='Your Email' value={email} onChange={e => setEmail(e.target.value)} required />
+                        <PasswordInput label='Your Password' value={password} onChange={e => setPassword(e.target.value)} required />
+                        <Button onClick={signupUser}>Sign Up</Button>
+                        </Stack>
+                    </Modal>
                 </Flex>
             </Flex>
             <Flex style={{ backgroundColor: 'white' }} align='center' py="lg" justify='space-around' direction='row'>
                 <Link to="/" style={{ textDecoration: 'none' }}>
                     <Flex >
-                        <Title fw={500} c='black' onClick={()=>navigate("/")}>BEYOUNG</Title>
+                        <Title fw={500} c='black' onClick={() => navigate("/")}>BEYOUNG</Title>
                         <sub>®</sub>
                     </Flex>
                 </Link>
@@ -100,11 +122,14 @@ const Header = () => {
                             <Text fw={600}>MEN</Text>
                         </HoverCard.Target>
                         <HoverCard.Dropdown>
+                            <SimpleGrid cols={5}>
                             {dropdown.map((e) => {
                                 return (
-                                    <Text style={{cursor:'pointer'}}>{e}</Text>
-                                )
-                            })}
+
+                                    <Text  fw={500} key={e} style={{ cursor: 'pointer' }}>{e}</Text>
+                                    )
+                                })}
+                                </SimpleGrid>
                         </HoverCard.Dropdown>
                     </HoverCard>
                     <Text fw={600}>WOMEN</Text>

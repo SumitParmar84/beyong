@@ -28,7 +28,7 @@ const ProductSearch = () => {
                 <Grid.Col span={3}>
                     <Paper shadow='sm' p="sm" component={Flex} direction="column" gap='xl'>
                         <Title fw={500} order={3}>FILTER</Title>
-                        <Accordion defaultValue={["size"]} variant='separated'>
+                        <Accordion defaultValue={["size",'design']} variant='separated'>
                             <Accordion.Item key='size' value='size'>
                                 <Accordion.Control><Title fw={600} order={3}>SIZE</Title></Accordion.Control>
                                 <Accordion.Panel>
