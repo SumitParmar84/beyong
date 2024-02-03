@@ -1,4 +1,4 @@
-import { Box, Button, Card, Flex, HoverCard, Modal, PasswordInput, SimpleGrid, Stack, Text, TextInput, Title, rem } from '@mantine/core'
+import { Box, Button, Card, Flex, HoverCard, Modal, PasswordInput, SimpleGrid, Stack, Text, TextInput, Title, UnstyledButton, rem } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { FaLocationDot } from 'react-icons/fa6';
 import { AiOutlineSearch, AiFillHeart } from 'react-icons/ai';
@@ -127,7 +127,7 @@ const Header = () => {
                             {dropdown.map((e) => {
                                 return (
 
-                                    <Text ta='center' tt='capitalize' fw={700} key={e} style={{ cursor: 'pointer' }}>{e}</Text>
+                                    <UnstyledButton ta='center' tt='capitalize' fw={700} key={e} style={{ cursor: 'pointer' }}>{e}</UnstyledButton>
                                     )
                                 })}
                                 </SimpleGrid>
@@ -147,7 +147,7 @@ const Header = () => {
                         }}
                     />
                     <AiFillHeart fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/mywhislist")} />
-                    <IoCartSharp fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/mycart")}/>
+                    <IoCartSharp fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/myshopping/cart")}/>
                 </Flex>
             </Flex>
         </Card>

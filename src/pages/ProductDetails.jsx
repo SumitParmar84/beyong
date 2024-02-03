@@ -1,14 +1,17 @@
 import { Carousel } from '@mantine/carousel';
 import { Button, Container, Flex, Grid, Image, Paper, Rating, ScrollArea, Select, Text, Title, TypographyStylesProvider, rem } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router';
+import { useEffect, useState } from 'react'
+import { useParams , useNavigate } from 'react-router-dom';
 
 const ProductDetails = () => {
-    const [size, setSize] = useState([]);
+    const [sizes, setSizes] = useState([]);
+    const [size,setSize] = useState("L");
+    const [quantity,setQuantity] = useState("1");
     const [product, setProduct] = useState({});
     const [image, setImage] = useState([]);
     const params = useParams();
+    const navigate = useNavigate();
     const [ratings, setRatings] = useState(0);
 
     useEffect(() => {
@@ -22,11 +25,32 @@ const ProductDetails = () => {
             setProduct(result.data);
             setImage(result.data.images);
             setRatings(result.data.ratings);
-            setSize(result.data.size)
+            setSizes(result.data.size)
+            console.log(result.data);
 
         }
         fetchProduct();
     }, []);
+
+
+    const addToCart = async (id) => {
+            const res = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/cart/${id}`, {
+                method:"PATCH",
+                headers: {
+                    "Content-Type":"application/json",
+                    "projectID": "f104bi07c490",
+                    "Authorization":`Bearer ${localStorage.getItem('token')}`
+                },
+                body:JSON.stringify({
+                    quantity:Number(quantity),
+                    size
+                })
+            });
+            const result = await res.json();
+            console.log(result);
+            navigate("/myshopping/cart");
+    }
+
     return (
         <Container p='xl'>
             <Grid >
@@ -76,7 +100,15 @@ const ProductDetails = () => {
                         </ScrollArea>
                         <Select
                             placeholder="size"
-                            data={size}
+                            data={sizes}
+                            value={size}
+                            onChange={setSize}
+                        />
+                        <Select
+                            placeholder="quantity"
+                            data={["1","2","3","4","5","6","7","8","9"]}
+                            value={quantity}
+                            onChange={setQuantity}
                         />
                         <Flex gap={5}>
                             <Title order={2} fw={500}>₹ {product.price}</Title>
@@ -84,12 +116,13 @@ const ProductDetails = () => {
                             <Text style={{ color: '#22FF09' }}>(40% off)</Text>
                         </Flex>
                         <Flex justify='space-around'>
-                            <Button size='lg'>Add To Cart</Button>
+                            <Button size='lg' onClick={()=>addToCart(product._id)}>Add To Cart</Button>
                             <Button size='lg'>Buy Now</Button>
                         </Flex>
                     </Flex>
                 </Grid.Col>
             </Grid>
+            <Title>Rating & Review</Title>
         </Container>
     )
 }
