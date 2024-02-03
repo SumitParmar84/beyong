@@ -1,4 +1,4 @@
-import { Box, Container, Flex, SimpleGrid, Text, Title } from '@mantine/core'
+import { Container, Flex, SimpleGrid, Text, Title } from '@mantine/core'
 
 const Footer = () => {
   return (

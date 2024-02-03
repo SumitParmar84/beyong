@@ -1,8 +1,10 @@
 import { Button, Container, Fieldset, PasswordInput, Space, Stack, TextInput, Title } from '@mantine/core'
 import { useState } from 'react'
 import { useAuth }  from '../auth/store.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate();
     const { storetokenInLS } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,6 +26,7 @@ const Login = () => {
         storetokenInLS(results.token);
         setEmail("");
         setPassword("");
+        navigate("/")
         location.reload();
     }
 

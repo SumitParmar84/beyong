@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 const ProductSearch = () => {
     const [display, setDisplay] = useState([]);
     const { name } = useParams();
+    
 
 
     useEffect(() => {
@@ -61,8 +62,12 @@ const ProductSearch = () => {
                             <Card key={e._id} shadow='sm' w={rem(295)} radius='md' component={Link} to={`/product/${e._id}`}>
                                 <Flex direction='column' gap='sm'>
                                 <Image src={e.displayImage} alt="image" h={300} w={270} radius='md' style={{alignSelf:'center'}}/>
-                                <Title fw={500} order={3} style={{textWrap:'wrap'}}>{e.name}</Title>
-                                <Title fw={600} order={4}>Price : ₹ {e.price}</Title>
+                                <Title fw={400} order={3} style={{textWrap:'wrap'}}>{e.name}</Title>
+                                <Flex gap={6} align='center'>
+                                    <Title fw={600} order={4}>₹{e.price}</Title>
+                                    <Title c='gray' fw={600} order={4} style={{textDecoration:'line-through'}}>₹{e.price+40}</Title>
+                                    <Text style={{color:'#22FF09'}}>(40% off)</Text>
+                                </Flex>
                                 </Flex>
                             </Card>
                         )

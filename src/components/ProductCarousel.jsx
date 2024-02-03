@@ -1,6 +1,6 @@
 import { Carousel } from '@mantine/carousel';
-import { Container, Flex, Image, Paper, Text, Title } from '@mantine/core'
-import React, { useEffect, useState } from 'react'
+import { Container, Flex, Image, Paper,  Title } from '@mantine/core'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 
@@ -10,7 +10,7 @@ const ProductCarousel = () => {
 
     useEffect(()=>{
         const fetchProduct= async()=>{
-            const res = await fetch("https://academics.newtonschool.co/api/v1/ecommerce/clothes/products",{
+            const res = await fetch("https://academics.newtonschool.co/api/v1/ecommerce/clothes/products?limit=50",{
                 headers:{
                     "projectID" : "f104bi07c490",
                 }
@@ -32,7 +32,7 @@ const ProductCarousel = () => {
             {
                 product.map((e,index)=>{
                         return(
-                            <Carousel.Slide>
+                            <Carousel.Slide key={index}>
                                     <Link key={index} to={`/product/${e._id}`} style={{textDecoration:'none'}}>
                                         <Paper p="xl" radius='lg' shadow="sm" h="30rem" component={Flex} direction="column" gap="sm" align="center">
                                             <Image src={e.displayImage} radius='lg'/>

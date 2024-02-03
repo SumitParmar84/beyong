@@ -11,6 +11,7 @@ import { useDisclosure } from '@mantine/hooks';
 
 
 const Header = () => {
+    
     const { storetokenInLS , isLoggedIn } = useAuth();
     const [dropdown, setDropDown] = useState([]);
     const [opened, { open, close }] = useDisclosure(false);
@@ -117,7 +118,7 @@ const Header = () => {
                     </Flex>
                 </Link>
                 <Flex direction='row' gap='xl' align='center'>
-                    <HoverCard>
+                    <HoverCard shadow='sm'>
                         <HoverCard.Target>
                             <Text fw={600}>MEN</Text>
                         </HoverCard.Target>
@@ -126,7 +127,7 @@ const Header = () => {
                             {dropdown.map((e) => {
                                 return (
 
-                                    <Text  fw={500} key={e} style={{ cursor: 'pointer' }}>{e}</Text>
+                                    <Text ta='center' tt='capitalize' fw={700} key={e} style={{ cursor: 'pointer' }}>{e}</Text>
                                     )
                                 })}
                                 </SimpleGrid>
@@ -145,8 +146,8 @@ const Header = () => {
                             placeholder: 'Search...',
                         }}
                     />
-                    <AiFillHeart fontSize={rem(25)} style={{ cursor: 'pointer' }} />
-                    <IoCartSharp fontSize={rem(25)} style={{ cursor: 'pointer' }} />
+                    <AiFillHeart fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/mywhislist")} />
+                    <IoCartSharp fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/mycart")}/>
                 </Flex>
             </Flex>
         </Card>

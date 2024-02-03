@@ -10,6 +10,7 @@ import ShoppingCart from './pages/ShoppingCart'
 import Whislist from './pages/Whislist'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import Protected from './pages/Protected'
 
 const App = () => {
   return (
@@ -18,9 +19,9 @@ const App = () => {
       <Routes>
         <Route path='/'  element={<Home/>}/>
         <Route path='/products/:name'  element={<ProductSearch/>}/>
-        <Route path='/product/:id'  element={<ProductDetails/>}/>
-        <Route path='/mycart'  element={<ShoppingCart/>}/>
-        <Route path='/mywhislist'  element={<Whislist/>}/>
+        <Route path='/product/:id'  element={<Protected Component={ProductDetails}/>}/>
+        <Route path='/mycart'  element={<Protected Component={ShoppingCart} />}/>
+        <Route path='/mywhislist'  element={<Protected Component={Whislist} />}/>
         <Route path='/login'  element={<Login/>}/>
         <Route path='/logout'  element={<Logout/>}/>
         <Route path='*'  element={<ErrorPage/>}/>
