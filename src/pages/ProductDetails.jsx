@@ -3,6 +3,8 @@ import { Button, Container, Flex, Grid, Image, Paper, Rating, ScrollArea, Select
 import { modals } from '@mantine/modals';
 import { useEffect, useState } from 'react'
 import { useParams , useNavigate } from 'react-router-dom';
+import { FaShoppingCart } from "react-icons/fa";
+import { MdFavoriteBorder } from "react-icons/md";
 
 const ProductDetails = () => {
     const [sizes, setSizes] = useState([]);
@@ -48,7 +50,25 @@ const ProductDetails = () => {
             });
             const result = await res.json();
             console.log(result);
-            navigate("/myshopping/cart");
+            navigate("/cart");
+    }
+
+
+    const addToWishlist = async (id) => {
+        const res = await fetch(`https://academics.newtonschool.co/api/v1/ecommerce/wishlist/${id}`, {
+            method:"PATCH",
+            headers: {
+                "Content-Type":"application/json",
+                "projectID": "f104bi07c490",
+                "Authorization":`Bearer ${localStorage.getItem('token')}`
+            },
+            body:JSON.stringify({
+                productId:id
+            })
+        });
+        const result = await res.json();
+        console.log(result);
+        navigate("/mywishlist");
     }
 
     return (
@@ -89,7 +109,9 @@ const ProductDetails = () => {
                 <Grid.Col component={Paper} span={6} p='xl' h={770}>
                     <Flex direction='column' gap='lg' h={700}>
                         <Title order={3} fw={400}>{product.name}</Title>
+
                         <Title fw={300} order={3} c="gray">{product.subCategory}</Title>
+                        <MdFavoriteBorder onClick={() => addToWishlist(params.id)} fontSize={rem(40)} />
                         <Rating value={ratings} size='lg' />
                         <ScrollArea>
                             <TypographyStylesProvider style={{ fontSize: 14 }}>
@@ -116,8 +138,8 @@ const ProductDetails = () => {
                             <Text style={{ color: '#22FF09' }}>(40% off)</Text>
                         </Flex>
                         <Flex justify='space-around'>
-                            <Button size='lg' onClick={()=>addToCart(product._id)}>Add To Cart</Button>
-                            <Button size='lg'>Buy Now</Button>
+                            <Button leftSection={<><FaShoppingCart/></>} size='lg' onClick={()=>addToCart(product._id)}>Add To Cart</Button>
+                            <Button size='lg' color='orange.2' style={{color:'black'}}>Buy Now</Button>
                         </Flex>
                     </Flex>
                 </Grid.Col>

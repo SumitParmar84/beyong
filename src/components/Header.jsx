@@ -146,8 +146,8 @@ const Header = () => {
                             placeholder: 'Search...',
                         }}
                     />
-                    <AiFillHeart fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/mywhislist")} />
-                    <IoCartSharp fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/myshopping/cart")}/>
+                    <AiFillHeart fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/mywishlist")} />
+                    <IoCartSharp fontSize={rem(25)} style={{ cursor: 'pointer' }} onClick={()=>navigate("/cart")}/>
                 </Flex>
             </Flex>
         </Card>

@@ -5,8 +5,7 @@ import ProductDetails from './pages/ProductDetails'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
 import ErrorPage from './pages/ErrorPage'
-import Shopping from './pages/Shopping'
-import Whislist from './pages/Whislist'
+import Whishlist from './pages/Wishlist'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Protected from './pages/Protected'
@@ -22,12 +21,10 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/products/:name' element={<ProductSearch />} />
         <Route path='/product/:id' element={<Protected Component={ProductDetails} />} />
-        <Route path='myshopping' element={<Protected Component={Shopping} />}>
-          <Route path='cart' element={<Protected Component={Cart} />} />
-          <Route path='address' element={<Protected Component={Address} />}/>
-          <Route path='payment' element={<Protected Component={Payment} />}/>
-        </Route>
-        <Route path='/mywhislist' element={<Protected Component={Whislist} />} />
+        <Route path='cart' element={<Protected Component={Cart} />} />
+        <Route path='address' element={<Protected Component={Address} />} />
+        <Route path='payment' element={<Protected Component={Payment} />} />
+        <Route path='/mywishlist' element={<Protected Component={Whishlist} />} />
         <Route path='/login' element={<Login />} />
         <Route path='/logout' element={<Logout />} />
         <Route path='*' element={<ErrorPage />} />
